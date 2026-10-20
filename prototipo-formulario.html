@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PROTOTIPO | Actualiza tu número | CESFAM N°5</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#4A1B4F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --plum:#4A1B4F; --berry:#C22A62; --berry-dark:#A01F50; --mist:#F5F2F7; --lilac:#E7DDEC;
+  --ink:#26152B; --muted:#5B4A60; --white:#fff; --ok:#2F7D6D; --ok-bg:#E4F2EE; --err:#B3261E;
+  --amber:#8A5200; --amber-bg:#FFF3DD;
+  --body:"Atkinson Hyperlegible",system-ui,sans-serif; --display:"Bricolage Grotesque",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--mist);color:var(--ink);font-family:var(--body);font-size:1.1rem;line-height:1.55}
+:focus-visible{outline:3px solid var(--berry);outline-offset:3px;border-radius:6px}
+.col{max-width:560px;margin:0 auto;padding:0 20px}
+.proto{background:var(--amber-bg);color:var(--amber);font-weight:700;text-align:center;padding:10px 16px;font-size:.95rem;
+  padding-top:calc(10px + env(safe-area-inset-top))}
+.top{background:var(--plum);color:var(--white);padding:26px 0 30px}
+.top h1{font-family:var(--display);font-weight:800;font-size:clamp(1.9rem,7vw,2.5rem);line-height:1.08;margin:0}
+.top p{margin:10px 0 0;opacity:.9}
+.card{background:var(--white);border-radius:22px;padding:24px 22px;margin-top:-16px;position:relative;box-shadow:0 14px 34px rgba(53,17,58,.14)}
+.field{margin-bottom:22px}
+.lbl{display:block;font-weight:700;margin-bottom:6px}
+.hint{display:block;font-size:.95rem;color:var(--muted);margin:-2px 0 8px}
+input[type=text],input[type=tel],input[type=email],input[type=date]{
+  width:100%;font:inherit;padding:14px 16px;border:2px solid var(--lilac);border-radius:12px;background:var(--white);color:var(--ink);min-height:54px}
+input:focus{border-color:var(--plum);outline:none}
+input[aria-invalid="true"]{border-color:var(--err)}
+.phone{display:flex;align-items:center;gap:8px}
+.phone span{font-weight:700;padding:14px 12px;background:var(--mist);border-radius:12px;min-height:54px;display:flex;align-items:center}
+.msg{display:block;font-size:.95rem;color:var(--err);margin-top:6px;min-height:1em}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opts label{display:flex;gap:12px;align-items:center;padding:12px 14px;border:2px solid var(--lilac);border-radius:12px;cursor:pointer;min-height:52px}
+.opts input{width:22px;height:22px;accent-color:var(--plum);flex:none}
+.opts label:has(input:checked){border-color:var(--plum);background:#FBF8FC}
+.why{background:var(--mist);border-radius:14px;padding:16px 18px;font-size:1rem;margin-bottom:20px}
+.why b{color:var(--plum)}
+.why p{margin:0 0 8px}.why p:last-child{margin:0}
+.consent{display:flex;gap:12px;align-items:flex-start;font-size:1rem;cursor:pointer}
+.consent input{width:24px;height:24px;margin-top:2px;accent-color:var(--plum);flex:none}
+.btn{display:block;width:100%;min-height:56px;border:0;border-radius:999px;background:var(--berry);color:var(--white);
+  font:700 1.15rem var(--body);cursor:pointer;margin-top:22px}
+.btn:hover{background:var(--berry-dark)}
+.done{display:none;text-align:center;padding:10px 0}
+.done.show{display:block}
+.done .check{width:72px;height:72px;border-radius:50%;background:var(--ok-bg);display:grid;place-items:center;margin:0 auto 14px}
+.done h2{font-family:var(--display);font-weight:800;font-size:1.6rem;color:var(--plum);margin:0 0 8px;line-height:1.15}
+.done p{color:var(--muted);margin:0 0 10px}
+.note{background:var(--amber-bg);color:var(--amber);border-radius:12px;padding:12px 14px;font-weight:700;font-size:.95rem;margin-top:16px}
+footer{margin:28px 0 40px;font-size:.95rem;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="proto" role="note">PROTOTIPO PARA REVISIÓN. Este formulario no envía ni guarda ningún dato.</div>
+
+<header class="top">
+  <div class="col">
+    <h1>Actualiza tu número y recibe recordatorios de tus horas</h1>
+    <p>Te tomará menos de un minuto.</p>
+  </div>
+</header>
+
+<main class="col">
+  <div class="card">
+    <form id="form" novalidate>
+      <div class="field">
+        <label class="lbl" for="run">RUN</label>
+        <span class="hint" id="run-h">Con guion y dígito verificador, por ejemplo 12345678-5</span>
+        <input type="text" id="run" name="run" inputmode="text" autocomplete="off" aria-describedby="run-h run-m" required>
+        <span class="msg" id="run-m" aria-live="polite"></span>
+      </div>
+
+      <div class="field">
+        <label class="lbl" for="nac">Fecha de nacimiento</label>
+        <span class="hint" id="nac-h">La usamos para confirmar que eres tú</span>
+        <input type="date" id="nac" name="nac" aria-describedby="nac-h nac-m" required>
+        <span class="msg" id="nac-m" aria-live="polite"></span>
+      </div>
+
+      <div class="field">
+        <label class="lbl" for="tel">Número de celular</label>
+        <div class="phone"><span aria-hidden="true">+56</span><input type="tel" id="tel" name="tel" inputmode="numeric" autocomplete="tel-national" placeholder="9 1234 5678" aria-describedby="tel-m" required></div>
+        <span class="msg" id="tel-m" aria-live="polite"></span>
+      </div>
+
+      <fieldset class="field" style="border:0;padding:0;margin:0 0 22px">
+        <legend class="lbl" style="padding:0">Este número es</legend>
+        <div class="opts">
+          <label><input type="radio" name="duenio" value="propio" checked> Mío</label>
+          <label><input type="radio" name="duenio" value="familiar"> De un familiar o cuidador que me ayuda con mis horas</label>
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label class="lbl" for="mail">Correo electrónico <span style="font-weight:400;color:var(--muted)">(opcional)</span></label>
+        <input type="email" id="mail" name="mail" autocomplete="email" aria-describedby="mail-m">
+        <span class="msg" id="mail-m" aria-live="polite"></span>
+      </div>
+
+      <div class="why">
+        <p><b>¿Para qué usamos tus datos?</b> Solo para actualizar tu ficha en el CESFAM N°5 y contactarte por tus atenciones de salud: recordatorios de horas, cambios de agenda y resultados de exámenes.</p>
+        <p><b>¿Quién los ve?</b> Únicamente el personal del CESFAM encargado de actualizar tu ficha. No los compartimos con nadie más.</p>
+        <p><b>¿Puedo cambiar de opinión?</b> Sí, en cualquier momento. Responde a cualquier mensaje nuestro o acércate a la OIRS.</p>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="ok" name="ok" aria-describedby="ok-m">
+        <span>Acepto que el CESFAM N°5 me contacte por WhatsApp, llamada o correo para recordarme mis horas y informarme sobre mis atenciones de salud.</span>
+      </label>
+      <span class="msg" id="ok-m" aria-live="polite"></span>
+
+      <button class="btn" type="submit">Actualizar mi número</button>
+    </form>
+
+    <div class="done" id="done" role="status" aria-live="polite">
+      <div class="check"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#2F7D6D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></div>
+      <h2>¡Listo! Recibimos tus datos</h2>
+      <p>Revisaremos que coincidan con tu ficha y los actualizaremos dentro de los próximos días hábiles.</p>
+      <p>Desde entonces te avisaremos por WhatsApp antes de cada hora.</p>
+      <div class="note">Prototipo: no se envió ningún dato.</div>
+    </div>
+  </div>
+
+  <footer>
+    <p>¿Prefieres hacerlo en persona? Acércate al SOME o la OIRS del CESFAM N°5, Rodulfo Philippi N° 91, Santiago.</p>
+  </footer>
+</main>
+
+<script>
+/* Validación del RUN con dígito verificador (módulo 11) */
+function limpiarRun(v){ return v.replace(/[^0-9kK]/g, "").toUpperCase(); }
+function runValido(v){
+  var r = limpiarRun(v);
+  if (r.length < 2) return false;
+  var cuerpo = r.slice(0, -1), dv = r.slice(-1);
+  if (!/^\d+$/.test(cuerpo) || cuerpo.length < 6) return false;
+  var suma = 0, mult = 2;
+  for (var i = cuerpo.length - 1; i >= 0; i--){ suma += parseInt(cuerpo[i], 10) * mult; mult = mult === 7 ? 2 : mult + 1; }
+  var res = 11 - (suma % 11);
+  var esperado = res === 11 ? "0" : res === 10 ? "K" : String(res);
+  return dv === esperado;
+}
+function formatearRun(v){
+  var r = limpiarRun(v); if (r.length < 2) return v;
+  var cuerpo = r.slice(0, -1).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  return cuerpo + "-" + r.slice(-1);
+}
+function telValido(v){ return /^9\d{8}$/.test(v.replace(/\D/g, "")); }
+function mailValido(v){ return v === "" || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+function fechaValida(v){
+  if (!v) return false;
+  var d = new Date(v + "T00:00:00"), hoy = new Date();
+  return d < hoy && d.getFullYear() > hoy.getFullYear() - 120;
+}
+
+function marcar(id, ok, texto){
+  var el = document.getElementById(id);
+  el.setAttribute("aria-invalid", ok ? "false" : "true");
+  document.getElementById(id + "-m").textContent = ok ? "" : texto;
+  return ok;
+}
+
+var run = document.getElementById("run");
+run.addEventListener("blur", function(){
+  if (run.value.trim()){
+    if (runValido(run.value)) run.value = formatearRun(run.value);
+    marcar("run", runValido(run.value), "Revisa tu RUN: el dígito verificador no coincide.");
+  }
+});
+
+document.getElementById("form").addEventListener("submit", function(e){
+  e.preventDefault();  // PROTOTIPO: nunca se envía nada
+  var ok = true;
+  ok = marcar("run", runValido(run.value), "Revisa tu RUN: el dígito verificador no coincide.") && ok;
+  ok = marcar("nac", fechaValida(document.getElementById("nac").value), "Ingresa tu fecha de nacimiento.") && ok;
+  ok = marcar("tel", telValido(document.getElementById("tel").value), "Ingresa un celular de 9 dígitos que empiece con 9.") && ok;
+  ok = marcar("mail", mailValido(document.getElementById("mail").value.trim()), "Revisa tu correo, parece incompleto.") && ok;
+  var acepta = document.getElementById("ok").checked;
+  document.getElementById("ok-m").textContent = acepta ? "" : "Para recibir recordatorios necesitamos tu autorización.";
+  ok = acepta && ok;
+  if (!ok){
+    var primero = document.querySelector('[aria-invalid="true"]') || document.getElementById("ok");
+    primero.focus();
+    return;
+  }
+  document.getElementById("form").style.display = "none";
+  document.getElementById("done").classList.add("show");
+  window.scrollTo(0, 0);
+});
+</script>
+</body>
+</html>
