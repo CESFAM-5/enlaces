@@ -52,7 +52,7 @@ body{
   font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
   font-size:1.125rem;line-height:1.45;
   padding:
-    calc(env(safe-area-inset-top,0px) + 2.5rem) 1.25rem
+    calc(env(safe-area-inset-top,0px) + 1.25rem) 1.25rem
     calc(env(safe-area-inset-bottom,0px) + 2rem);
 }
 main{max-width:30rem;margin:0 auto}
@@ -60,14 +60,14 @@ main{max-width:30rem;margin:0 auto}
 /* ================================================================
    ENCABEZADO
    ================================================================ */
-header{text-align:center;margin-bottom:2rem}
+header{display:flex;align-items:center;justify-content:center;gap:.9rem;margin-bottom:1.1rem}
 .emblema{
-  display:block;width:7rem;height:7rem;margin:0 auto 1rem;
-  border-radius:50%;background:#ffffff;padding:.35rem;
-  box-shadow:0 2px 10px rgba(22,50,58,.12);
+  display:block;flex:none;width:4.25rem;height:4.25rem;
+  border-radius:50%;background:#ffffff;padding:.2rem;
+  box-shadow:0 2px 8px rgba(22,50,58,.12);
 }
-h1{font-size:1.65rem;margin:0 0 .25rem;line-height:1.2}
-.bajada{margin:0;color:var(--texto-suave);font-size:1rem}
+h1{font-size:1.45rem;margin:0;line-height:1.15}
+.bajada{margin:.1rem 0 0;color:var(--texto-suave);font-size:.95rem}
 
 /* ================================================================
    BOTÓN DESTACADO: ACTUALIZA TUS DATOS
@@ -75,15 +75,15 @@ h1{font-size:1.65rem;margin:0 0 .25rem;line-height:1.2}
 .principal{
   display:block;text-decoration:none;color:inherit;
   background:var(--superficie);
-  border:2px solid var(--destacado);border-radius:1.25rem;
-  overflow:hidden;margin-bottom:1.5rem;
+  border:2px solid var(--destacado);border-radius:1.1rem;
+  overflow:hidden;margin-bottom:1rem;
   transition:transform .15s ease;
 }
 .principal:hover{transform:translateY(-2px)}
 .principal .fila{
   display:flex;align-items:center;gap:1rem;
   background:var(--destacado);color:#fff;
-  padding:1.1rem 1.25rem;font-size:1.3rem;font-weight:700;
+  padding:.7rem 1rem;font-size:1.05rem;font-weight:700;gap:.6rem;white-space:nowrap;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]) .principal .fila{color:#0f1d21}
@@ -91,26 +91,26 @@ h1{font-size:1.65rem;margin:0 0 .25rem;line-height:1.2}
 .principal .refuerzo{
   display:flex;align-items:center;gap:.75rem;
   background:var(--destacado-claro);
-  padding:.9rem 1.25rem;font-size:1.05rem;
+  padding:.5rem 1rem;font-size:.95rem;line-height:1.3;
 }
 .principal .refuerzo svg{flex:none;color:var(--destacado)}
 .principal[aria-disabled="true"]{pointer-events:none;opacity:.75}
 .pronto{
-  margin-left:auto;font-size:.85rem;font-weight:700;
-  background:rgba(255,255,255,.22);padding:.2rem .6rem;border-radius:999px;
+  margin-left:auto;font-size:.75rem;font-weight:700;white-space:nowrap;
+  background:rgba(255,255,255,.22);padding:.15rem .55rem;border-radius:999px;
 }
 
 /* ================================================================
    BOTONES SECUNDARIOS
    ================================================================ */
-.enlaces{display:flex;flex-direction:column;gap:.85rem}
+.enlaces{display:flex;flex-direction:column;gap:.7rem}
 .boton,
 details.rrss > summary{
   display:flex;align-items:center;gap:1rem;
-  min-height:4rem;padding:.8rem 1.25rem;
+  height:4.25rem;padding:0 1.1rem;
   background:var(--superficie);color:var(--texto);
   border:2px solid var(--borde);border-radius:999px;
-  text-decoration:none;font-weight:700;font-size:1.15rem;
+  text-decoration:none;font-weight:700;font-size:1.05rem;
   cursor:pointer;transition:border-color .15s ease;
 }
 .boton:hover,details.rrss > summary:hover{border-color:var(--marca)}
@@ -119,8 +119,9 @@ details.rrss > summary{
   display:grid;place-items:center;
   background:var(--fondo);color:var(--marca);
 }
-.texto{display:flex;flex-direction:column}
-.texto small{font-weight:400;font-size:.92rem;color:var(--texto-suave)}
+/* Título y bajada en una línea cada uno: así todos los botones miden lo mismo */
+.texto{display:block;min-width:0;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.texto small{display:block;font-weight:400;font-size:.88rem;color:var(--texto-suave);overflow:hidden;text-overflow:ellipsis}
 
 /* Redes sociales desplegables */
 details.rrss > summary{list-style:none}
@@ -190,8 +191,10 @@ footer p{margin:.25rem 0}
 
   <header>
     <img class="emblema" src="data:image/png;base64,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" alt="Logo CESFAM N°5" width="240" height="240">
-    <h1>CESFAM N°5</h1>
-    <p class="bajada">Rodulfo Philippi 91, Santiago</p>
+    <div>
+      <h1>CESFAM N°5</h1>
+      <p class="bajada">Rodulfo Philippi 91, Santiago</p>
+    </div>
   </header>
 
   <!-- ============================================================
@@ -200,7 +203,7 @@ footer p{margin:.25rem 0}
        ============================================================ -->
   <a class="principal" id="btn-actualiza" href="#" data-goatcounter-click="actualiza-datos" data-goatcounter-title="Actualiza tus datos">
     <span class="fila">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></svg>
       Actualiza tus datos
     </span>
     <span class="refuerzo">
@@ -215,7 +218,7 @@ footer p{margin:.25rem 0}
       <span class="icono" aria-hidden="true">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4" width="19" height="13" rx="2"/><path d="M8 21h8M12 17v4M12 7.5v6M9 10.5h6"/></svg>
       </span>
-      <span class="texto">Telesalud<small>Pide atención en línea en tu CESFAM</small></span>
+      <span class="texto">Telesalud<small>Pide atención en línea</small></span>
     </a>
 
     <a class="boton" id="btn-pap" href="#" data-goatcounter-click="agenda-pap" data-goatcounter-title="Agenda tu PAP">
@@ -229,7 +232,7 @@ footer p{margin:.25rem 0}
       <span class="icono" aria-hidden="true">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v15H6a2 2 0 0 0-2 2zm0 0A2 2 0 0 0 6 22h14"/><path d="M12 7.5v.01M12 10.5v4"/></svg>
       </span>
-      <span class="texto">Guía de Orientación Usuaria<small>Trámites, GES y cómo atenderte</small></span>
+      <span class="texto">Guía de Orientación<small>Trámites, GES y atención</small></span>
     </a>
 
     <details class="rrss">
@@ -237,7 +240,7 @@ footer p{margin:.25rem 0}
         <span class="icono" aria-hidden="true">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
         </span>
-        <span class="texto">Redes sociales<small>Síguenos y entérate de novedades</small></span>
+        <span class="texto">Redes sociales<small>Novedades del CESFAM</small></span>
         <svg class="flecha" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
       </summary>
       <div class="redes" id="lista-redes"></div>
@@ -288,7 +291,7 @@ const CONFIG = {
     principal.setAttribute("aria-disabled", "true");
     const etiqueta = document.createElement("span");
     etiqueta.className = "pronto";
-    etiqueta.textContent = "Muy pronto";
+    etiqueta.textContent = "Pronto";
     principal.querySelector(".fila").appendChild(etiqueta);
   }
 
